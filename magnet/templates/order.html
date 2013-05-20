@@ -1,0 +1,125 @@
+{% extends "template_1.html" %}
+{% load i18n %}
+
+{% block ext_js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/imagnet.js" xmlns="http://www.w3.org/1999/html"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="clearfix"></div>
+    <!-- Jumbotron -->
+    <div class="order_box">
+        {% if order.status == 'new' and not order_num %}
+            {% for magnet in order.magnets.all %}
+                <div class="order_add">
+                    <div class="order_magnit">
+                        <div class="order_magnit_shell"></div>
+                        <div class="order_pic" style="background-image: url({{ magnet.image }})"></div>
+                        <div class="overlay hidden">
+                            <a class="btn btn-info first" href="#">
+                                <i class=" icon-screenshot"></i>&nbsp;Редактировать
+                            </a>
+                            <a class="btn btn-info btn-small second" href="#">
+                                <i class="icon-book"></i>&nbsp;Дублировать
+                            </a>
+                            <a class="btn btn-danger btn-mini third" href="#" >
+                                <i class="icon-trash"></i>&nbsp;Удалить
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            {% for magnet in order.magnets.all %}
+                <div class="order_add">
+                    <div class="order_magnit">
+                        <div class="order_magnit_shell"></div>
+                        <div class="order_pic" style="background-image: url({{ magnet.image }})"></div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    {% if order.status == 'new'  and not order_num %}
+        <div class="order_list">
+            <span>
+                {% blocktrans count magnet_count=order.magnets.all.count %}{{ magnet_count }} magnet{% plural %}{{ magnet_count }} magnets{% endblocktrans %}
+            </span><p class="right">70 грн.</p></br>
+            <span>Доставка по Украине</span><p class="right">12 грн.</p></br>
+            <hr>
+            <span><strong>К оплате</strong></span><p class="right"><strong>82 грн.</strong></p>
+
+            <form class="form-horizontal" method="post" action="{% url create_order %}">{% csrf_token %}
+                <div class="control-group">
+                    <label class="control-label" for="inputName">Имя и фамилия</label>
+                    <div class="controls">
+                        <input type="text" id="inputName" name="fio" placeholder="Имя и фамилия">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputPhone">Телефон</label>
+                    <div class="controls">
+                        <input type="text" id="inputPhone" name="phone" placeholder="Телефон">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputEmail">E-mail</label>
+                    <div class="controls">
+                        <input type="text" id="inputEmail" name="email" placeholder="E-mail">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputEmail">Город</label>
+                    <div class="controls">
+                        <input type="text" id="inputCity" name="city" placeholder="Город">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label post_number" for="inputPost">Отделение "Новой почты"</label>
+                    <div class="controls">
+                        <input type="text" id="inputPost" name="new_poshta_affiliate">
+                    </div>
+                </div>
+
+
+            <a href="http://novaposhta.ua/frontend/brunchoffices/ru" target="_blank"><p class="text-right link"><small>Найти ближайшее</small></p></a>
+
+            <div class="pay">
+                <p><small>Способ оплаты</small></p>
+                <label class="radio" style="display:inline-block">
+                    <input type="radio" name="payment_type" id="optionsRadios1" value="online" checked >
+                    Оплатить онлайн &nbsp;(<a href="#" target="_blank" class="choise">много способов</a>)
+                </label>
+                <label class="radio">
+                    <input type="radio" name="payment_type" id="optionsRadios2" value="after_delivery">
+                    Оплатить при получении (+15 грн.)
+                </label>
+                <input type="submit" class="btn  btn-success" value="Оформить заказ">
+            </div>
+            </form>
+        </div>
+    {% else %}
+        <div class="order_done">
+            <h3>Ваш заказ №{{ order.pk }} оформлен</h3>
+            <h4>Данные для доставки</h4>
+            <p>{{ order.city }}, склад №{{ order.new_poshta_affiliate }},</p>
+            <p>{{ order.phone }}</p>
+            <p>{{ order.fio }}</p>
+            <h4>К оплате</h4>
+            <p>82 грн. (оплата онлайн)</p>
+            <h4>Статус заказа</h4>
+            <p>{{ order.get_status_display }}</p>
+
+            <a class="btn  btn-success" href="#">Перейти к оплате</a>
+            <p><small>Если вы заметили неточности в заказе, <a class="link" href="#" target="_blank">напишите нам.</a></small></p>
+        </div>
+    {% endif %}
+    <div class="clearfix"></div>
+
+
+{% endblock %}
