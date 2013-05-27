@@ -1,0 +1,15 @@
+Заказчик {{ order.fio }} заказ №{{ order.pk }}
+
+Адрес доставки:
+        {{ order.city }}
+        Новая почта, склад №{{ order.new_poshta_affiliate }}
+        {{ order.phone }}
+К оплате:
+        {{ order.get_total_sum_with_delivery }} грн ({{ order.payment_type }})
+Статус заказа:
+        {{ order.status }}
+
+Адресс страницыы заказа http://imagnet.com.ua/{% url get_order order.number %}
+
+--
+imagnet.com.ua

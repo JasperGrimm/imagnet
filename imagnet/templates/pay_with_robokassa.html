@@ -1,0 +1,9 @@
+{% extends 'template_1.html' %}
+
+{% block content %}
+    <form action="{{ form.target }}" method="POST">
+        <p></p>
+        <p>{{ form.as_p }}</p>
+        <p><input class="btn btn-success" type="submit" value="Купить"></p>
+    </form>
+{% endblock %}

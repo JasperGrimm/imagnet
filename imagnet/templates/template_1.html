@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load cms_tags %}
+
+{% block left_content %}
+    {% placeholder magnet %}
+    {% comment %}<img src="{{ MEDIA_URL }}images/magnit_pic2.png" class="img-polaroid"/>
+    <a class="btn btn-large btn-success" href="#">Загрузить свою фотку</a>{% endcomment %}
+{% endblock %}
+
+{% block base_content %}
+    {% placeholder header_content %}
+    {% placeholder footer_content %}
+{% endblock %}

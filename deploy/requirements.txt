@@ -1,0 +1,3 @@
+pyuploadcare
+git+git://github.com/alex/django-ajax-validation.git
+django-robokassa

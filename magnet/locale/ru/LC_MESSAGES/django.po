@@ -1,0 +1,154 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-21 15:01+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: cms_app.py:7
+msgid "Order App"
+msgstr "Приложение \"заказы\""
+
+#: cms_plugins.py:15
+msgid "Hello Plugin"
+msgstr ""
+
+#: cms_plugins.py:36
+msgid "Magnet"
+msgstr "Магнитик"
+
+#: cms_plugins.py:52
+msgid "Magnet List"
+msgstr "Список магнитиков"
+
+#: models.py:37
+msgid "New order"
+msgstr "Новый заказ"
+
+#: models.py:37
+msgid "Waiting for payment"
+msgstr "Ожидает оплаты"
+
+#: models.py:37
+msgid "Waiting to be sent"
+msgstr "Ожидает отправки"
+
+#: models.py:37
+msgid "Sent"
+msgstr "Отправлен"
+
+#: models.py:37
+msgid "Canceled"
+msgstr "Отменен"
+
+#: models.py:40
+msgid "Payment online"
+msgstr "Оплатить онлайн"
+
+#: models.py:40
+msgid "After delivery"
+msgstr "Оплатить при получении"
+
+#: models.py:46 models.py:108
+msgid "Magnet image"
+msgstr "Список магнитиков"
+
+#: models.py:49 models.py:111
+#, python-format
+msgid "Magnet #%d"
+msgstr "Магнитик #%d"
+
+#: models.py:52
+msgid "Magnet for the customer"
+msgstr "Магнитик заказчика"
+
+#: models.py:53
+msgid "Magnets for the customers"
+msgstr "Магнитики заказчиков"
+
+#: models.py:56
+msgid "count from"
+msgstr "Количество [от]"
+
+#: models.py:57
+msgid "count to"
+msgstr "Количество [до]"
+
+#: models.py:58
+msgid "Price"
+msgstr "Цена"
+
+#: models.py:59
+msgid "Cash on delivery"
+msgstr "Надбавка за наложенный платеж"
+
+#: models.py:63
+#, python-format
+msgid "less then %d"
+msgstr "менее %d"
+
+#: models.py:65
+#, python-format
+msgid "more then %d"
+msgstr "больше чем %d"
+
+#: models.py:67
+#, python-format
+msgid "from %(from)f to %(to)f"
+msgstr "от %(from)f до %(to)f"
+
+#: models.py:71
+msgid "Magnet price"
+msgstr "Цена магнитика"
+
+#: models.py:72
+msgid "Magnet prices"
+msgstr "Цены магнитиков"
+
+#: models.py:77
+msgid "Unique number of order (it's a part of the url)"
+msgstr "Уникальный номер заказа (является частью URL)"
+
+#: models.py:78
+msgid "Magnets"
+msgstr "Магнитик"
+
+#: models.py:79
+msgid "Status"
+msgstr "Статус"
+
+#: models.py:104
+msgid "Order"
+msgstr "Заказ"
+
+#: models.py:105
+msgid "Orders"
+msgstr "Заказы"
+
+#: models.py:114
+msgid "Image for magnet on main page"
+msgstr "Картинка магнитика на главной странице"
+
+#: models.py:115
+msgid "Images for magnet on main page"
+msgstr "Картинки магнитика на главной странице"
+
+#: templates/order.html:47
+#, python-format
+msgid "%(magnet_count)s magnet"
+msgid_plural "%(magnet_count)s magnets"
+msgstr[0] "%(magnet_count)s магнитик"
+msgstr[1] "%(magnet_count)s магнитика"
+msgstr[2] "%(magnet_count)s магнитиков"

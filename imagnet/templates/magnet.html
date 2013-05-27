@@ -1,0 +1,49 @@
+{% load sekizai_tags %}
+{% addtoblock "js" %}
+    <script>
+        UPLOADCARE_PUBLIC_KEY = "{{ uploadcare.pub_key }}";
+        UPLOADCARE_LOCALE = 'ru';
+        UPLOADCARE_IMAGES_ONLY = true;
+        UPLOADCARE_AUTOSTORE = true;
+    </script>
+    {{ form.media }}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/imagnet.js"></script>
+    <script type="text/javascript">
+        //var widget = uploadcare.MultipleWidget('[role=uploadcare-uploader][data-multiple]');
+        var widget = uploadcare.Widget('[role=uploadcare-uploader]');
+        widget.onUploadComplete(function(info) {
+            // Handle uploaded file info.
+            //TODO "сделать переход на страницу заказа"
+            console.log("completed");
+            console.log(info);
+            var g_info = {
+                "cdnUrl": info.cdnUrl,
+                "cdnUrlModifiers": info.cdnUrlModifiers,
+                "crop": info.crop,
+                "isImage": info.isImage,
+                "isStored": info.isStored,
+                "name": info.name,
+                "previewUrl": info.previewUrl,
+                "size": info.size,
+                "uuid": info.uuid
+            };
+            $.ajax({
+                url: "{% url save_order %}",
+                data: g_info,
+                async: true,
+                type: 'post',
+                success: function(response){
+                    window.location.href = "{% url _order %}"
+                }
+            });
+
+        });
+    </script>
+{% endaddtoblock %}
+
+<img src="{{ random_magnet.image }}" class="img-polaroid"/>
+<a class="btn btn-large btn-success upload" href="#">Загрузить свою фотку</a>
+
+<form class="hidden">{% csrf_token %}
+    {{ form.as_p }}
+</form>
