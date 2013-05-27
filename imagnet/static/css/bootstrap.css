@@ -6222,7 +6222,7 @@ a.badge:focus {
 .order_list hr {border-bottom: 1px solid rgb(5, 5, 5);}
 .order_list .pay {margin-top: 20px;}
 .post_number {width: 185px !important;}
-#inputPost {  width: 95px;  margin-right: -5px;}
+#inputPost input {  width: 95px;  margin-right: -5px;}
 .pay  .btn  {margin-top: 15px;}
 .link, .link:hover  {color: #265CFF;}
 .link:hover {text-decoration: underline;}

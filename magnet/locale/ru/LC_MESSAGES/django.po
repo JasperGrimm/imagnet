@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-21 00:37+0300\n"
+"POT-Creation-Date: 2013-05-21 15:01+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,78 +33,115 @@ msgstr "Магнитик"
 msgid "Magnet List"
 msgstr "Список магнитиков"
 
-#: models.py:35
+#: models.py:37
 msgid "New order"
 msgstr "Новый заказ"
 
-#: models.py:35
+#: models.py:37
 msgid "Waiting for payment"
 msgstr "Ожидает оплаты"
 
-#: models.py:35
+#: models.py:37
 msgid "Waiting to be sent"
 msgstr "Ожидает отправки"
 
-#: models.py:35
+#: models.py:37
 msgid "Sent"
 msgstr "Отправлен"
 
-#: models.py:35
+#: models.py:37
 msgid "Canceled"
 msgstr "Отменен"
 
-#: models.py:38
+#: models.py:40
 msgid "Payment online"
 msgstr "Оплатить онлайн"
 
-#: models.py:38
+#: models.py:40
 msgid "After delivery"
 msgstr "Оплатить при получении"
 
-#: models.py:44 models.py:78
-#, fuzzy
+#: models.py:46 models.py:108
 msgid "Magnet image"
 msgstr "Список магнитиков"
 
-#: models.py:47 models.py:81
-#, fuzzy, python-format
+#: models.py:49 models.py:111
+#, python-format
 msgid "Magnet #%d"
 msgstr "Магнитик #%d"
 
-#: models.py:50
+#: models.py:52
 msgid "Magnet for the customer"
 msgstr "Магнитик заказчика"
 
-#: models.py:51
+#: models.py:53
 msgid "Magnets for the customers"
 msgstr "Магнитики заказчиков"
 
-#: models.py:54
+#: models.py:56
+msgid "count from"
+msgstr "Количество [от]"
+
+#: models.py:57
+msgid "count to"
+msgstr "Количество [до]"
+
+#: models.py:58
+msgid "Price"
+msgstr "Цена"
+
+#: models.py:59
+msgid "Cash on delivery"
+msgstr "Надбавка за наложенный платеж"
+
+#: models.py:63
+#, python-format
+msgid "less then %d"
+msgstr "менее %d"
+
+#: models.py:65
+#, python-format
+msgid "more then %d"
+msgstr "больше чем %d"
+
+#: models.py:67
+#, python-format
+msgid "from %(from)f to %(to)f"
+msgstr "от %(from)f до %(to)f"
+
+#: models.py:71
+msgid "Magnet price"
+msgstr "Цена магнитика"
+
+#: models.py:72
+msgid "Magnet prices"
+msgstr "Цены магнитиков"
+
+#: models.py:77
 msgid "Unique number of order (it's a part of the url)"
 msgstr "Уникальный номер заказа (является частью URL)"
 
-#: models.py:55
-#, fuzzy
+#: models.py:78
 msgid "Magnets"
 msgstr "Магнитик"
 
-#: models.py:56
+#: models.py:79
 msgid "Status"
 msgstr "Статус"
 
-#: models.py:74
+#: models.py:104
 msgid "Order"
 msgstr "Заказ"
 
-#: models.py:75
+#: models.py:105
 msgid "Orders"
 msgstr "Заказы"
 
-#: models.py:84
+#: models.py:114
 msgid "Image for magnet on main page"
 msgstr "Картинка магнитика на главной странице"
 
-#: models.py:85
+#: models.py:115
 msgid "Images for magnet on main page"
 msgstr "Картинки магнитика на главной странице"
 
@@ -112,6 +149,6 @@ msgstr "Картинки магнитика на главной странице
 #, python-format
 msgid "%(magnet_count)s magnet"
 msgid_plural "%(magnet_count)s magnets"
-msgstr[0] "%(magnet_count)s магнит"
-msgstr[1] "%(magnet_count)s магнита"
-msgstr[2] "%(magnet_count)s магнитов"
+msgstr[0] "%(magnet_count)s магнитик"
+msgstr[1] "%(magnet_count)s магнитика"
+msgstr[2] "%(magnet_count)s магнитиков"

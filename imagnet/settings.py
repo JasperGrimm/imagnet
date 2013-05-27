@@ -133,6 +133,7 @@ TEMPLATE_DIRS = (
 
 CMS_TEMPLATES = (
     ('template_1.html', "Main page"),
+    ('about_page.html', 'About page')
 )
 
 CMS_LANGUAGES = {
@@ -186,6 +187,7 @@ INSTALLED_APPS = (
     'sekizai',
     'pyuploadcare.dj',
     'magnet',
+    'robokassa',
     'south',
 )
 
@@ -222,3 +224,16 @@ LOGGING = {
         },
     }
 }
+from magnet.models import Robokassa
+
+
+def get_robokassa_settings():
+    try:
+        robokassa = Robokassa.objects.all()[0]
+    except IndexError:
+        robokassa = Robokassa.objects.create(robokassa_login='', robokassa_password1='')
+    return robokassa
+
+ROBOKASSA_LOGIN = get_robokassa_settings().robokassa_login
+ROBOKASSA_PASSWORD1 = get_robokassa_settings().robokassa_password1
+ROBOKASSA_TEST_MODE = True

@@ -5,11 +5,19 @@
  * Time: 1:02 PM
  * To change this template use File | Settings | File Templates.
  */
+var now_edit = null;
 $(function(){
     $('a.upload').on('click', function(event){
         $(this).next('form').find('.uploadcare-widget-buttons-file').trigger('click');
         return false;
     });
+
+    $('a.edit').on('click', function(event){
+        now_edit = $(this).parents('.order_add');
+        $('form').find('.uploadcare-widget-buttons-file').trigger('click');
+        return false;
+    });
+
 }());
 
 function getCookie(name) {
@@ -57,9 +65,46 @@ $.ajaxSetup({
 });
 
 $(function(){
-    $('.order_magnit_shell, .overlay').on('mouseenter', function(ev){
+
+    function set_total_price(price){
+        $('.total_cost strong').text(price + ' грн.');
+    }
+
+    function updatePrices(with_cost_on_delivery){
+        var el_magnet_cost = $('.magnet_cost').text(),
+            el_delivery_cost = $('.delivery_cost').text(),
+            el_cost_on_delivery = $('.cost_on_delivery').text();
+        if (with_cost_on_delivery){
+            set_total_price(parseFloat(el_magnet_cost) + parseFloat(el_delivery_cost) + parseFloat(el_cost_on_delivery));
+            return
+        }
+        set_total_price(parseFloat(el_magnet_cost) + parseFloat(el_delivery_cost));
+        return
+    }
+
+    $('.order_box').on('mouseenter', '.order_magnit_shell, .overlay', function(ev){
         $(this).parent().find('.overlay').removeClass('hidden');
-    }).on('mouseout', function(ev){
+    }).on('mouseout', '.order_magnit_shell, .overlay', function(ev){
         $(this).parent().find('.overlay').addClass('hidden');
+    });
+
+    $('.order_box').on('click', 'a.duplicate', function(ev){
+        var magnet = $(this).parents('.order_add');
+        iMagnet.duplicate(magnet);
+    });
+
+    $('.order_box').on('click', 'a.delete', function(ev){
+        var magnet = $(this).parents('.order_add');
+        iMagnet.delete(magnet);
+    });
+
+    $('form input[name=payment_type]').on('change', function(ev){
+        if ($(this).attr('value') == 'after_delivery'){
+            $('.order_list .after_delivery').removeClass('hidden');
+            updatePrices(true);
+        }else{
+            $('.order_list .after_delivery').addClass('hidden');
+            updatePrices();
+        }
     });
 }());

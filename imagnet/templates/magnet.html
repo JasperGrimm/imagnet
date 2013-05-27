@@ -33,7 +33,7 @@
                 async: true,
                 type: 'post',
                 success: function(response){
-                    console.log(response);
+                    window.location.href = "{% url _order %}"
                 }
             });
 
