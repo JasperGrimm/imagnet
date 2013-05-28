@@ -195,6 +195,18 @@ class Order(models.Model):
         verbose_name_plural = _('Orders')
 
 
+from robokassa.signals import result_received
+
+
+def payment_received(sender, **kwargs):
+    order = Order.objects.get(pk=kwargs['InvId'])
+    order.status = 'waiting_to_be_sent'
+    order.save()
+
+result_received.connect(payment_received)
+
+
+
 class MagnetImage(models.Model):
     image = ImageField(verbose_name=_('Magnet image'), manual_crop=get_image_size())
 
