@@ -238,6 +238,6 @@ def get_robokassa_settings():
 ROBOKASSA_LOGIN = get_robokassa_settings().robokassa_login
 ROBOKASSA_PASSWORD1 = get_robokassa_settings().robokassa_password1
 ROBOKASSA_TEST_MODE = True
-
+ROBOKASSA_USE_POST = True
 
 from settings_remote import *
