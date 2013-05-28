@@ -66,13 +66,7 @@ def order(request, order_num=None):
         order_obj = get_object_or_404(Order, number=order_num)
         if order_obj.status == 'new':
             raise Http404
-    else:
-        custom_context['editable'] = True
-        order_obj = get_order(request, draft=True)
-    form = OrderForm(instance=order_obj)
-    custom_context.update({'order': order_obj})
-    custom_context.update({'form': form})
-    custom_context['pay_form'] = RobokassaForm(initial={
+        custom_context['pay_form'] = RobokassaForm(initial={
                'OutSum': order_obj.get_total_sum_with_delivery(),
                'InvId': order_obj.pk,
                'Desc': order_obj.fio,
@@ -80,6 +74,12 @@ def order(request, order_num=None):
                # 'IncCurrLabel': '',
                # 'Culture': 'ru'
            })
+    else:
+        custom_context['editable'] = True
+        order_obj = get_order(request, draft=True)
+    form = OrderForm(instance=order_obj)
+    custom_context.update({'order': order_obj})
+    custom_context.update({'form': form})
     return render(request, 'order.html', custom_context)
 
 
