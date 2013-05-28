@@ -1,3 +1,7 @@
 .idea
 *.pyc
+<<<<<<< HEAD
 *.db
+=======
+imagnet/settings_remote.py
+>>>>>>> ca168a7d1d268be7fcdf07b9a5fd205188144161
