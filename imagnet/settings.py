@@ -60,7 +60,7 @@ MEDIA_URL = "/media/"
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
 #STATIC_ROOT = ''  # os.path.join(PROJECT_PATH, "static")
-STATIC_ROOT = "/home/djaksont/domains/djakson.tk/public_html/static/"
+STATIC_ROOT = ""
 STATIC_URL = "/static/"
 
 # Additional locations of static files
@@ -238,3 +238,6 @@ def get_robokassa_settings():
 ROBOKASSA_LOGIN = get_robokassa_settings().robokassa_login
 ROBOKASSA_PASSWORD1 = get_robokassa_settings().robokassa_password1
 ROBOKASSA_TEST_MODE = True
+
+
+from settings_remote import *
