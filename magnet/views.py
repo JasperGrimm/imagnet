@@ -71,8 +71,8 @@ def order(request, order_num=None):
                'InvId': order_obj.pk,
                'Desc': order_obj.fio,
                'Email': order_obj.email,
-               # 'IncCurrLabel': '',
-               # 'Culture': 'ru'
+               'IncCurrLabel': 'UAH',
+               'Culture': 'ru'
            })
     else:
         custom_context['editable'] = True

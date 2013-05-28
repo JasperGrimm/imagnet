@@ -8,10 +8,10 @@ admin.autodiscover()
 urlpatterns = i18n_patterns('',
                             url(r'^admin/', include(admin.site.urls)),
                             url(r'^save/$', 'magnet.views.save', name='save_order'),
-                            url(r'settings/$', include('dbsettings.urls')),
+                            url(r'^settings/$', include('dbsettings.urls')),
                             url(r'^payment/success/$', 'magnet.views.payment_success', name='payment_success'),
-                            url(r'^payment/success/$', 'magnet.views.payment_fail', name='payment_fail'),
-                            url(r'^payment/success/$', 'magnet.views.payment_result', name='payment_result'),
+                            url(r'^payment/fail/$', 'magnet.views.payment_fail', name='payment_fail'),
+                            url(r'^payment/result/$', 'magnet.views.payment_result', name='payment_result'),
                             #url(r'^robokassa/', include('robokassa.urls')),
                             url(r'^', include('cms.urls')),
                             )
