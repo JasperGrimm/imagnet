@@ -2,7 +2,7 @@
 import os
 from django.utils.translation import ugettext_lazy as gettext
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
