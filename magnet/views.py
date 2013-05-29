@@ -221,7 +221,7 @@ from robokassa.signals import result_received, success_page_visited, fail_page_v
 def payment_result(request):
     data = request.POST if USE_POST else request.GET
     form = ResultURLForm(data)
-    print data
+    print data.get('SignatureValue')
     if form.is_valid():
         order_id, order_sum = form.cleaned_data['InvId'], form.cleaned_data['OutSum']
 
@@ -235,7 +235,7 @@ def payment_result(request):
         result_received.send(sender=notification, InvId=order_id, OutSum=order_sum,
                              extra=form.extra_params())
 
-        return HttpResponse('OK%s' % id)
+        return HttpResponse('OK%s' % order_id)
     return HttpResponse('error: bad signature')
 
 

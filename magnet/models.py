@@ -221,9 +221,10 @@ class MagnetImage(models.Model):
 class Robokassa(models.Model):
     robokassa_login = models.CharField(max_length=100)
     robokassa_password1 = models.CharField(max_length=200)
+    robokassa_password2 = models.CharField(max_length=200)
 
     def __unicode__(self):
-        return "%s : %s" %(self.robokassa_login, self.robokassa_password1)
+        return "%s : %s : %s" % (self.robokassa_login, self.robokassa_password1, self.robokassa_password2)
 
     class Meta:
         verbose_name = _('Robokassa payment system')

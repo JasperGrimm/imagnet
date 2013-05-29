@@ -232,11 +232,12 @@ def get_robokassa_settings():
     try:
         robokassa = Robokassa.objects.all()[0]
     except IndexError:
-        robokassa = Robokassa.objects.create(robokassa_login='', robokassa_password1='')
+        robokassa = Robokassa.objects.create(robokassa_login='', robokassa_password1='', robokassa_password2='')
     return robokassa
 
 ROBOKASSA_LOGIN = get_robokassa_settings().robokassa_login
 ROBOKASSA_PASSWORD1 = get_robokassa_settings().robokassa_password1
+ROBOKASSA_PASSWORD2 = get_robokassa_settings().robokassa_password2
 ROBOKASSA_TEST_MODE = True
 ROBOKASSA_USE_POST = True
 
