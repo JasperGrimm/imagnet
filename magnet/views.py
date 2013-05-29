@@ -71,7 +71,7 @@ def order(request, order_num=None):
                'InvId': order_obj.pk,
                'Desc': order_obj.fio,
                'Email': order_obj.email,
-               'IncCurrLabel': 'UAH',
+               #'IncCurrLabel': 'UAH',
                'Culture': 'ru'
            })
     else:
@@ -218,24 +218,25 @@ from robokassa.signals import result_received, success_page_visited, fail_page_v
 
 
 @csrf_exempt
-def payment_result(request, template_name='robokassa/success.html', extra_context=None,
-            error_template_name = 'robokassa/error.html'):
+def payment_result(request):
     data = request.POST if USE_POST else request.GET
-    form = SuccessRedirectForm(data)
+    form = ResultURLForm(data)
+    print data
     if form.is_valid():
-        id, sum = form.cleaned_data['InvId'], form.cleaned_data['OutSum']
+        order_id, order_sum = form.cleaned_data['InvId'], form.cleaned_data['OutSum']
 
-        # в случае, когда не используется строгая проверка, действия с заказом
-        # можно осуществлять в обработчике сигнала robokassa.signals.success_page_visited
-        success_page_visited.send(sender = form, InvId = id, OutSum = sum,
-                                  extra = form.extra_params())
+        # сохраняем данные об успешном уведомлении в базе, чтобы
+        # можно было выполнить дополнительную проверку на странице успешного
+        # заказа
+        notification = SuccessNotification.objects.create(InvId=order_id, OutSum=order_sum)
 
-        context = {'InvId': id, 'OutSum': sum, 'form': form}
-        context.update(form.extra_params())
-        context.update(extra_context or {})
-        return render(request, template_name, context)
+        # дополнительные действия с заказом (например, смену его статуса) можно
+        # осуществить в обработчике сигнала robokassa.signals.result_received
+        result_received.send(sender=notification, InvId=order_id, OutSum=order_sum,
+                             extra=form.extra_params())
 
-    return render(request, error_template_name, {'form': form})
+        return HttpResponse('OK%s' % id)
+    return HttpResponse('error: bad signature')
 
 
 @csrf_exempt
