@@ -20,6 +20,8 @@ from models import Magnet, Order, get_order
 from imagnet.settings import cur
 from magnet.cms_plugins import MagnetForm
 from robokassa.forms import RobokassaForm
+from django.contrib import messages
+
 
 class OrderForm(ModelForm):
     class Meta:
@@ -208,9 +210,8 @@ def export(request):
             raise Http404
     raise Http404
 
-from robokassa.views import success, fail, receive_result
-from django.views.decorators.csrf import csrf_exempt
 
+from django.views.decorators.csrf import csrf_exempt
 from robokassa.conf import USE_POST
 from robokassa.forms import ResultURLForm, SuccessRedirectForm, FailRedirectForm
 from robokassa.models import SuccessNotification
@@ -240,45 +241,56 @@ def payment_result(request):
 
 
 @csrf_exempt
-def payment_fail(request, template_name='robokassa/fail.html', extra_context=None,
-         error_template_name = 'robokassa/error.html'):
+def payment_fail(request):
     data = request.POST if USE_POST else request.GET
     form = FailRedirectForm(data)
+    messages.error(request, 'При оплате произошла ошибка')
     if form.is_valid():
-        id, sum = form.cleaned_data['InvId'], form.cleaned_data['OutSum']
+        order_id, order_sum = form.cleaned_data['InvId'], form.cleaned_data['OutSum']
 
         # дополнительные действия с заказом (например, смену его статуса для
         # разблокировки товара на складе) можно осуществить в обработчике
         # сигнала robokassa.signals.fail_page_visited
-        fail_page_visited.send(sender = form, InvId = id, OutSum = sum,
+        fail_page_visited.send(sender = form, InvId = order_id, OutSum = order_sum,
                                extra = form.extra_params())
 
-        context = {'InvId': id, 'OutSum': sum, 'form': form}
-        context.update(form.extra_params())
-        context.update(extra_context or {})
-        return render(request, template_name, context)
+        order_obj = get_object_or_404(Order, pk=order_id)
+        return redirect(to=reverse('get_order', kwargs={'order_num': order_obj.number}))
+    order_obj = get_order(request, False)
+    return redirect(to=reverse('get_order', kwargs={'order_num': order_obj.number}))
 
-    return render(request, error_template_name, {'form': form})
 
 
 @csrf_exempt
-def payment_success(request, template_name='robokassa/success.html', extra_context=None,
-            error_template_name = 'robokassa/error.html'):
+def payment_success(request):
     data = request.POST if USE_POST else request.GET
     form = SuccessRedirectForm(data)
-    context = {'InvId': data.get('InvId'), 'OutSum': data.get('OutSum'), 'form': form}
-    return render(request, template_name, context)
-    # if form.is_valid():
-    #     id, sum = form.cleaned_data['InvId'], form.cleaned_data['OutSum']
-    #
-    #     # в случае, когда не используется строгая проверка, действия с заказом
-    #     # можно осуществлять в обработчике сигнала robokassa.signals.success_page_visited
-    #     success_page_visited.send(sender = form, InvId = id, OutSum = sum,
-    #                               extra = form.extra_params())
-    #
-    #     context = {'InvId': id, 'OutSum': sum, 'form': form}
-    #     context.update(form.extra_params())
-    #     context.update(extra_context or {})
-    #     return render(request, template_name, context)
-    #
-    # return render(request, error_template_name, {'form': form})
+    #context = {'InvId': data.get('InvId'), 'OutSum': data.get('OutSum'), 'form': form}
+    #return render(request, template_name, context)
+    if form.is_valid():
+        order_id, order_sum = form.cleaned_data['InvId'], form.cleaned_data['OutSum']
+
+        # в случае, когда не используется строгая проверка, действия с заказом
+        # можно осуществлять в обработчике сигнала robokassa.signals.success_page_visited
+        success_page_visited.send(sender = form, InvId = order_id, OutSum = order_sum,
+                                  extra = form.extra_params())
+
+        messages.success(request, 'Оплата прошла успешно')
+        # context = {'InvId': order_id, 'OutSum': order_sum, 'form': form}
+        # context.update(form.extra_params())
+        # context.update(extra_context or {})
+        #return render(request, template_name, context)
+        order_obj = get_object_or_404(Order, pk=order_id)
+        return redirect(to=reverse('get_order', kwargs={'order_num': order_obj.number}))
+
+    messages.error(request, 'При оплате произошла ошибка')
+    order_obj = get_order(request)
+    return redirect(to=reverse('get_order', kwargs={'order_num': order_obj.number}))
+
+
+def payment_received(sender, **kwargs):
+    order = Order.objects.get(pk=kwargs['InvId'])
+    order.status = 'waiting_to_be_sent'
+    order.save()
+
+result_received.connect(payment_received)
