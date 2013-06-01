@@ -229,14 +229,22 @@
             <p>{{ order.city }}, склад №{{ order.new_poshta_affiliate }},</p>
             <p>{{ order.phone }}</p>
             <p>{{ order.fio }}</p>
+            {% if order.status == 'waiting_for_payment' and order.payment_type == 'online' %}
             <h4>К оплате</h4>
             <p>{% if order.payment_type == 'online' %}{{ order.get_total_sum }}{% else %}{{ order.get_total_sum_with_delivery }}{% endif %} грн. {% if order.payment_type == 'online' %}(оплата онлайн){% else %}(оплата при получении){% endif %}</p>
+            {% endif %}
             <h4>Статус заказа</h4>
-            <p>{{ order.get_status_display }}</p>
-            <form action="{{ pay_form.target }}" method="POST">
-                {{ pay_form.as_p }}
-                <p><input class="btn btn-success" type="submit" value="Перейти к оплате"></p>
-            </form>
+            {% if order.status != 'sent' %}
+                <p>{{ order.get_status_display }}</p>
+            {% else %}
+                <p>{{ order.get_status_display }}, {% blocktrans with declaration_number=order.declaration_number %}declaration #{{ declaration_number }} {% endblocktrans %}</p>
+            {% endif %}
+            {% if order.status == 'waiting_for_payment' and order.payment_type == 'online' %}
+                <form action="{{ pay_form.target }}" method="POST">
+                    {{ pay_form.as_p }}
+                    <p><input class="btn btn-success" type="submit" value="Перейти к оплате"></p>
+                </form>
+            {% endif %}
             <p><small>Если вы заметили неточности в заказе, <a class="link" href="#" target="_blank">напишите нам.</a></small></p>
         </div>
     {% endif %}

@@ -145,6 +145,7 @@ class Order(models.Model):
     city = models.CharField(max_length=100)
     new_poshta_affiliate = models.CharField(max_length=10)
     payment_type = models.CharField(max_length=200, choices=get_payment_types(), default=get_payment_types()[0][0])
+    declaration_number = models.CharField(max_length=200, default='', null=True, blank=True)
 
     def set_empties(self):
         self.city = self.email = self.fio = self.new_poshta_affiliate = self.phone = 'empty'

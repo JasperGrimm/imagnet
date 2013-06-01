@@ -293,4 +293,13 @@ def payment_received(sender, **kwargs):
     order.status = 'waiting_to_be_sent'
     order.save()
 
+
+def payment_fail(sender, **kwargs):
+    order = Order.objects.get(pk=kwargs['InvId'])
+    order.status = 'waiting_for_payment'
+    order.save()
+
+
+fail_page_visited.connect(payment_fail)
+
 result_received.connect(payment_received)
